@@ -1,0 +1,7 @@
+/node_modules
+/npm-debug.log
+/.idea
+/config/onfig.json
+/data/announcements.test.json
+/data/announces.test.json
+/dist
