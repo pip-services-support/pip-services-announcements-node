@@ -1,13 +1,7 @@
-/**
- * @file Announcements process launcher
- * @copyright Digital Living Software Corp. 2014-2016
- */
+let AnnouncementsProcess = require('../obj/src/container/AnnouncementsProcess').AnnouncementsProcess;
 
-/* global */
-
-'use strict';
-
-var AnnouncementsProcessRunner = require('../lib/src/run/AnnouncementsProcessRunner').AnnouncementsProcessRunner;
-
-var runner = new AnnouncementsProcessRunner();
-runner.startWithDefaultConfig('../config/config.json');
+try {
+    new AnnouncementsProcess().run(process.argv);
+} catch (ex) {
+    console.error(ex);
+}

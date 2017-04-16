@@ -1,43 +1,25 @@
-import { Version1 as StorageV1 } from 'pip-clients-storage-node';
-let StorageNullClient = StorageV1.StorageNullClient;
-
-import { ComponentSet } from 'pip-services-runtime-node';
-import { ComponentConfig } from 'pip-services-runtime-node';
-import { DynamicMap } from 'pip-services-runtime-node';
+import { ConfigParams } from 'pip-services-commons-node';
 
 import { AnnouncementsFilePersistence } from '../../src/persistence/AnnouncementsFilePersistence';
 import { AnnouncementsPersistenceFixture } from './AnnouncementsPersistenceFixture';
 
-let config = ComponentConfig.fromValue({
-    descriptor: {
-        type: 'file'
-    },
-    options: {
-        path: './data/announces.test.json',
-        data: []
-    }
-});
-
 suite('AnnouncementsFilePersistence', ()=> {
-    let db, fixture, storage;
+    let persistence: AnnouncementsFilePersistence;
+    let fixture: AnnouncementsPersistenceFixture;
     
     setup((done) => {
-        db = new AnnouncementsFilePersistence();
-        db.configure(config);
+        persistence = new AnnouncementsFilePersistence('./data/Announcements.test.json');
 
-        fixture = new AnnouncementsPersistenceFixture(db);
-
-        storage = new StorageNullClient();
-        storage.configure(new ComponentConfig());
-
-        let components = ComponentSet.fromComponents(db, storage);
-
-        db.link(components);
-        db.open(done);
+        fixture = new AnnouncementsPersistenceFixture(persistence);
+        
+        persistence.open(null, (err) => {
+            if (err) done(err);
+            else persistence.clear(null, done);
+        });
     });
     
     teardown((done) => {
-        db.close(done);
+        persistence.close(null, done);
     });
         
     test('CRUD Operations', (done) => {
@@ -51,4 +33,5 @@ suite('AnnouncementsFilePersistence', ()=> {
     test('Get Random', (done) => {
         fixture.testGetRandom(done);
     });
+
 });

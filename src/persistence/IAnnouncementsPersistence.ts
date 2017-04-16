@@ -1,12 +1,32 @@
-import { FilterParams } from 'pip-services-runtime-node';
-import { PagingParams } from 'pip-services-runtime-node';
-import { IPersistence } from 'pip-services-runtime-node';
+import { FilterParams } from 'pip-services-commons-node';
+import { PagingParams } from 'pip-services-commons-node';
+import { DataPage } from 'pip-services-commons-node';
+import { AnyValueMap } from 'pip-services-commons-node';
+import { IGetter } from 'pip-services-data-node';
+import { IWriter } from 'pip-services-data-node';
 
-export interface IAnnouncementsPersistence extends IPersistence {
-    getAnnouncements(correlationId: string, filter: FilterParams, paging: PagingParams, callback: any): void;
-    getRandomAnnouncement(correlationId: string, filter: FilterParams, callback: any): void;
-    getAnnouncementById(correlationId: string, announcementId: string, callback: any): void;
-    createAnnouncement(correlationId: string, announcement: any, callback: any): void;
-    updateAnnouncement(correlationId: string, announcementId: string, announcement: any, callback: any): void;
-    deleteAnnouncement(correlationId: string, announcementId: string, callback: any): void;
+import { PartyReferenceV1 } from '../data/version1/PartyReferenceV1';
+import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
+
+export interface IAnnouncementsPersistence
+    extends IGetter<AnnouncementV1, string>, IWriter<AnnouncementV1, string>  {
+    
+    getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
+        callback: (err: any, page: DataPage<AnnouncementV1>) => void): void;
+
+    getOneRandom(correlationId: string, filter: FilterParams, 
+        callback: (err: any, item: AnnouncementV1) => void): void;
+
+    getOneById(correlationId: string, id: string,
+        callback: (err: any, item: AnnouncementV1) => void): void;
+
+    create(correlationId: string, item: AnnouncementV1,
+        callback: (err: any, item: AnnouncementV1) => void): void;
+
+    update(correlationId: string, item: AnnouncementV1,
+        callback: (err: any, item: AnnouncementV1) => void): void;
+
+    deleteById(correlationId: string, id: string,
+        callback: (err: any, item: AnnouncementV1) => void): void;
 }
+

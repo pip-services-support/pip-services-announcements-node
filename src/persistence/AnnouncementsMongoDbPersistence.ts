@@ -1,235 +1,90 @@
 let _ = require('lodash');
-let async = require('async');
 
-import { Category } from 'pip-services-runtime-node';
-import { ComponentDescriptor } from 'pip-services-runtime-node';
-import { ComponentSet } from 'pip-services-runtime-node';
-import { FilterParams } from 'pip-services-runtime-node';
-import { PagingParams } from 'pip-services-runtime-node';
-import { MongoDbPersistence } from 'pip-services-runtime-node';
-import { Converter } from 'pip-services-runtime-node';
-import { TagsProcessor } from 'pip-services-runtime-node';
-import { NotFoundError } from 'pip-services-runtime-node';
-import { Version1 as StorageV1 } from 'pip-clients-storage-node';
+import { FilterParams } from 'pip-services-commons-node';
+import { PagingParams } from 'pip-services-commons-node';
+import { DataPage } from 'pip-services-commons-node';
+import { AnyValueMap } from 'pip-services-commons-node';
+import { TagsProcessor } from 'pip-services-commons-node';
+import { IdentifiableMongoDbPersistence } from 'pip-services-data-node';
 
-import { AnnouncementsDataConverter } from './AnnouncementsDataConverter';
+import { PartyReferenceV1 } from '../data/version1/PartyReferenceV1';
+import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
 import { IAnnouncementsPersistence } from './IAnnouncementsPersistence';
+import { AnnouncementsMongoDbSchema } from './AnnouncementsMongoDbSchema';
 
-export class AnnouncementsMongoDbPersistence extends MongoDbPersistence implements IAnnouncementsPersistence {
-	/**
-	 * Unique descriptor for the AnnouncementsMongoDbPersistence component
-	 */
-	public static Descriptor: ComponentDescriptor = new ComponentDescriptor(
-		Category.Persistence, "pip-services-announces", "mongodb", "*"
-	);
-    
-    private _storage: StorageV1.IStorageClient;
-    
+export class AnnouncementsMongoDbPersistence 
+    extends IdentifiableMongoDbPersistence<AnnouncementV1, string> 
+    implements IAnnouncementsPersistence {
+
     constructor() {
-        super(AnnouncementsMongoDbPersistence.Descriptor, require('./AnnouncementModel'));
+        super('announcements', AnnouncementsMongoDbSchema());
     }
 
-    public link(components: ComponentSet): void {
-        // Locate reference to quotes persistence component
-        this._storage = <StorageV1.IStorageClient>components.getOneRequired(
-        	new ComponentDescriptor(Category.Clients, "pip-services-storage", '*', '*')
-    	);
-        
-        super.link(components);
-    }
-    
-    private defineFilterCondition(filter: any): any {
-        let criteria = _.pick(filter, 'category', 'app', 'status');
+    private composeFilter(filter: FilterParams): any {
+        filter = filter || new FilterParams();
 
-        // Start time interval
-        if (filter.from) {
-            criteria.$and = criteria.$and || [];
-            criteria.$and.push({
-                created: { $gte: filter.from }
-            });
+        let criteria = [];
+
+        let search = filter.getAsNullableString('search');
+        if (search != null) {
+            let searchRegex = new RegExp(search, "i");
+            let searchCriteria = [];
+            searchCriteria.push({ 'title.en': { $regex: searchRegex } });
+            searchCriteria.push({ 'title.sp': { $regex: searchRegex } });
+            searchCriteria.push({ 'title.fr': { $regex: searchRegex } });
+            searchCriteria.push({ 'title.de': { $regex: searchRegex } });
+            searchCriteria.push({ 'title.ru': { $regex: searchRegex } });
+            searchCriteria.push({ 'content.en': { $regex: searchRegex } });
+            searchCriteria.push({ 'content.sp': { $regex: searchRegex } });
+            searchCriteria.push({ 'content.fr': { $regex: searchRegex } });
+            searchCriteria.push({ 'content.de': { $regex: searchRegex } });
+            searchCriteria.push({ 'content.ru': { $regex: searchRegex } });
+            searchCriteria.push({ 'location.name': { $regex: searchRegex } });
+            searchCriteria.push({ 'creator.name': { $regex: searchRegex } });
+            criteria.push({ $or: searchCriteria });
         }
 
-        // End time interval
-        if (filter.to) {
-            criteria.$and = criteria.$and || [];
-            criteria.$and.push({
-                created: { $lt: filter.to }
-            });
-        }
+        let id = filter.getAsNullableString('id');
+        if (id != null)
+            criteria.push({ _id: id });
+
+        let category = filter.getAsNullableString('category');
+        if (category != null)
+            criteria.push({ category: category });
+
+        let app = filter.getAsNullableString('app');
+        if (app != null)
+            criteria.push({ app: app });
+
+        let status = filter.getAsNullableString('status');
+        if (status != null)
+            criteria.push({ status: status });
 
         // Search by tags
-        if (filter.tags) {
-            let searchTags = TagsProcessor.compressTags(filter.tags);
-
-            criteria.$and = criteria.$and || [];
-            criteria.$and.push({
-                all_tags: { $in: searchTags }
-            });
+        let tags = filter.getAsObject('tags');
+        if (tags) {
+            let searchTags = TagsProcessor.compressTags(tags);
+            criteria.push({ all_tags: { $in: searchTags } });
         }
 
-        // Full text search
-        if (filter.search) {
-            var search = filter.search,
-                searchRegex = new RegExp(search, 'i');
+        let fromCreateTime = filter.getAsNullableDateTime('from_create_time');
+        if (fromCreateTime != null)
+            criteria.push({ create_time: { $gte: fromCreateTime } });
 
-            // Todo: This will not work for multi-language text
-            criteria.$or = [
-                { title: { $regex: searchRegex } },
-                { content: { $regex: searchRegex } },
-                { creator_name: { $regex: searchRegex } }
-            ];
-        }
-        
-        return criteria;
-    }
-    
-    public getAnnouncements(correlationId: string, filter: FilterParams, paging: PagingParams, callback: any) {
-        let criteria = this.defineFilterCondition(filter);
+        let toCreateTime = filter.getAsNullableDateTime('to_create_time');
+        if (toCreateTime != null)
+            criteria.push({ create_time: { $lt: toCreateTime } });
 
-        this.getPage(criteria, paging, '-created', { custom_dat: 0 }, callback);
+        return criteria.length > 0 ? { $and: criteria } : {};
     }
 
-    public getRandomAnnouncement(correlationId: string, filter: FilterParams, callback: any) {
-        let filterParams = <any>filter || {};
-
-        // Limit announcements to 1 week by default
-        if (filterParams.from == null)
-            filterParams.from = new Date(new Date().getTime() - 7 * 24 * 3600000);
-
-        let criteria = this.defineFilterCondition(filterParams);
-
-        this.getRandom(criteria, callback);
+    public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, callback: any) {
+        super.getPageByFilter(correlationId, this.composeFilter(filter), paging, '-time', null, callback);
     }
 
-    public getAnnouncementById(correlationId: string, announcementId: string, callback: any) {
-        this.getById(announcementId, callback);
+    public getOneRandom(correlationId: string, filter: FilterParams,
+        callback: (err: any, item: AnnouncementV1) => void): void {
+        super.getOneRandom(correlationId, this.composeFilter(filter), callback);
     }
 
-    public createAnnouncement(correlationId: string, announcement: any, callback: any) {            
-        let newItem = AnnouncementsDataConverter.validate(announcement);            
-        newItem._id = newItem.id || this.createUuid();
-        newItem.created = new Date();
-        newItem.status = newItem.status || 'new';
-        newItem.importance = newItem.importance || 0;
-        newItem.all_tags = TagsProcessor.extractHashTags(newItem, ['title', 'content']);
-
-        let item;
-
-        async.series([
-        // Create announcement
-            (callback) => {
-                this._model.create(newItem, (err, data) => {
-                    item = data;
-                    callback(err);
-                });
-            },
-        // Add file references
-            (callback) => {
-                this._storage.addBlockRefs(
-                     correlationId,
-                    AnnouncementsDataConverter.getBlockIds(item),
-                    {
-                        type: 'announcement',
-                        id: item._id,
-                        name: Converter.fromMultiString(item)
-                    },  
-                    callback  
-                );
-            }
-        ], (err) => {
-            item = this.convertItem(item);
-            callback(err, item);
-        });
-    }
-
-    public updateAnnouncement(correlationId: string, announcementId: string, announcement: any, callback: any) {
-        let newItem = AnnouncementsDataConverter.validate(announcement);            
-        newItem = _.omit(newItem, '_id', 'creator', 'created');
-
-        let oldItem, item;
-
-        async.series([
-        // Retrieve announcement
-            (callback) => {
-                this._model.findById(
-                    announcementId,
-                    (err, data) => {
-                        if (err == null && data == null) {
-                           err = new NotFoundError(
-                               this,
-                               'AnnouncementNotFound',
-                               'Announcements was not found'
-                            )
-                            .withCorrelationId(correlationId)
-                            .withDetails(announcementId);
-                        }
-
-                        item = data;
-                        oldItem = this.jsonToPublic(data);
-                        callback(err);
-                    }
-                );
-            },
-        // Update announcement
-            (callback) => {
-                _.assign(item, newItem);
-                item.all_tags = TagsProcessor.extractHashTags(newItem, ['title', 'content']);
-
-                item.save(callback);
-            },
-        // Update block references
-            (callback) => {
-                this._storage.updateBlockRefs(
-                    correlationId,
-                    AnnouncementsDataConverter.getBlockIds(oldItem),
-                    AnnouncementsDataConverter.getBlockIds(item),
-                    {
-                        type: 'announcement',
-                        id: item._id,
-                        name: Converter.fromMultiString(item.title)
-                    },
-                    callback
-                );
-            },
-        ], (err) => {
-            item = this.convertItem(item);
-            callback(err, item);
-        });
-    }
-
-    public deleteAnnouncement(correlationId: string, announcementId: string, callback) {
-        let item;
-
-        async.series([
-        // Remove announcement
-            (callback) => {
-                this._model.findByIdAndRemove(
-                    announcementId,
-                    (err, data) => {
-                        item = data;
-                        callback(err);
-                    }
-                );
-            },
-        // Remove block references
-            (callback) => {
-                if (item == null) {
-                    callback();
-                    return;
-                }
-                
-                this._storage.removeBlockRefs(
-                    correlationId,
-                    AnnouncementsDataConverter.getBlockIds(item),
-                    {
-                        type: 'announcement',
-                        id: item._id
-                    },
-                    callback
-                );
-            }
-        ], (err) => {
-            callback(err);
-        });
-    }
 }

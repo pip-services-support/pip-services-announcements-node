@@ -1,0 +1,1 @@
+export { AnnouncementsFactory } from './AnnouncementsFactory';
