@@ -16,4 +16,6 @@ var AnnouncementV1_1 = require("./AnnouncementV1");
 exports.AnnouncementV1 = AnnouncementV1_1.AnnouncementV1;
 var AnnouncementV1Schema_1 = require("./AnnouncementV1Schema");
 exports.AnnouncementV1Schema = AnnouncementV1Schema_1.AnnouncementV1Schema;
+var AnnouncementStatusV1_1 = require("./AnnouncementStatusV1");
+exports.AnnouncementStatusV1 = AnnouncementStatusV1_1.AnnouncementStatusV1;
 //# sourceMappingURL=index.js.map

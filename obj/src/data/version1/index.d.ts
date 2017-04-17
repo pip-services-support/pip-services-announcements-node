@@ -6,3 +6,4 @@ export { PartyReferenceV1 } from './PartyReferenceV1';
 export { PartyReferenceV1Schema } from './PartyReferenceV1Schema';
 export { AnnouncementV1 } from './AnnouncementV1';
 export { AnnouncementV1Schema } from './AnnouncementV1Schema';
+export { AnnouncementStatusV1 } from './AnnouncementStatusV1';
