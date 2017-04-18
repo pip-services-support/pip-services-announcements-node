@@ -31,7 +31,7 @@ class AnnouncementsCommandSet extends pip_services_commons_node_1.CommandSet {
         });
     }
     makeGetRandomAnnouncementCommand() {
-        return new pip_services_commons_node_2.Command("get_randome_announcement", new pip_services_commons_node_5.ObjectSchema(true)
+        return new pip_services_commons_node_2.Command("get_random_announcement", new pip_services_commons_node_5.ObjectSchema(true)
             .withOptionalProperty('filter', new pip_services_commons_node_7.FilterParamsSchema()), (correlationId, args, callback) => {
             let filter = pip_services_commons_node_3.FilterParams.fromValue(args.get("filter"));
             this._logic.getRandomAnnouncement(correlationId, filter, callback);

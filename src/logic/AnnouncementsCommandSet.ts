@@ -48,7 +48,7 @@ export class AnnouncementsCommandSet extends CommandSet {
 
 	private makeGetRandomAnnouncementCommand(): ICommand {
 		return new Command(
-			"get_randome_announcement",
+			"get_random_announcement",
 			new ObjectSchema(true)
 				.withOptionalProperty('filter', new FilterParamsSchema()),
 			(correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
