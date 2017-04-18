@@ -27,6 +27,89 @@ This microservice has dependencies on the following microservices:
   - [HTTP Version 1](doc/HttpProtocolV1.md)
   - [Seneca Version 1](doc/SenecaProtocolV1.md)
 
+##  Contract
+
+Logical contract of the microservice is presented below. For physical implementation (HTTP/REST, Thrift, Seneca, Lambda, etc.),
+please, refer to documentation of the specific protocol.
+
+```typescript
+class AnnouncementV1 implements IStringIdentifiable {
+    /* Identification */
+    public id: string;
+    public category: string;
+    public app?: string;
+
+    /* Automatically managed fields */
+    public creator: PartyReferenceV1;
+    public create_time: Date;
+
+    /* Content */
+    public title?: MultiString;
+    public content?: MultiString;
+    public location?: LocationV1;
+    public start_time?: Date;
+    public end_time?: Date;
+    public pic_ids?: string[];
+    public docs?: DocumentReferenceV1[];
+
+    /* Search */
+    public tags?: string[];
+    public all_tags?: string[];
+
+    /* Status */
+    public status?: string;
+    public importance?: number;
+
+    /* Custom fields */
+    public custom_hdr?: any;
+    public custom_dat?: any;
+}
+
+class DocumentReferenceV1 implements IStringIdentifiable {
+    public id: string;
+    public name?: string;
+}
+
+class PartyReferenceV1 implements IStringIdentifiable {
+    public id: string;
+    public name?: string;
+    public email?: string;
+}
+
+class LocationV1 {
+    public name: string;
+    public pos?: any;
+}
+
+class AnnouncementStatusV1 {
+    public static readonly New = "new";
+    public static readonly Writing = "writing";
+    public static readonly Translating = "translating";
+    public static readonly Verifying = "verifying";
+    public static readonly Completed = "completed";
+}
+
+interface IAnnouncementsV1 {
+    getAnnouncements(correlationId: string, filter: FilterParams, paging: PagingParams,
+        callback: (err: any, page: DataPage<AnnouncementV1>) => void): void;
+
+    getRandomAnnouncement(correlationId: string, filter: FilterParams,
+        callback: (err: any, announcement: AnnouncementV1) => void): void;
+
+    getAnnouncementById(correlationId: string, announcementId: string,
+        callback: (err: any, announcement: AnnouncementV1) => void): void;
+
+    createAnnouncement(correlationId: string, announcement: AnnouncementV1,
+        callback: (err: any, announcement: AnnouncementV1) => void): void;
+
+    updateAnnouncement(correlationId: string, announcement: AnnouncementV1,
+        callback: (err: any, announcement: AnnouncementV1) => void): void;
+
+    deleteAnnouncementById(correlationId: string, announcementId: string,
+        callback: (err: any, announcement: AnnouncementV1) => void): void;
+}
+```
+
 ## Download
 
 Right now the only way to get the microservice is to check it out directly from github repository
