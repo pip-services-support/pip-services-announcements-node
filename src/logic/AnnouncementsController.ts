@@ -99,7 +99,6 @@ export class AnnouncementsController implements IConfigurable, IReferenceable, I
         let oldAnnouncement: AnnouncementV1 = null;
         let newAnnouncement: AnnouncementV1 = null;
         
-        announcement.create_time = new Date();
         announcement.all_tags = TagsProcessor.extractHashTags(
             announcement, 
             'title.en', 'title.sp', 'title.fr', 'title.de', 'title.ru',

@@ -55,7 +55,6 @@ class AnnouncementsController {
     updateAnnouncement(correlationId, announcement, callback) {
         let oldAnnouncement = null;
         let newAnnouncement = null;
-        announcement.create_time = new Date();
         announcement.all_tags = pip_services_commons_node_3.TagsProcessor.extractHashTags(announcement, 'title.en', 'title.sp', 'title.fr', 'title.de', 'title.ru', 'content.en', 'content.sp', 'content.fr', 'content.de', 'content.ru');
         async.series([
             (callback) => {
