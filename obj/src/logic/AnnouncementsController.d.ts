@@ -8,8 +8,8 @@ import { DataPage } from 'pip-services-commons-node';
 import { ICommandable } from 'pip-services-commons-node';
 import { CommandSet } from 'pip-services-commons-node';
 import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
-import { IAnnouncementsBusinessLogic } from './IAnnouncementsBusinessLogic';
-export declare class AnnouncementsController implements IConfigurable, IReferenceable, ICommandable, IAnnouncementsBusinessLogic {
+import { IAnnouncementsController } from './IAnnouncementsController';
+export declare class AnnouncementsController implements IConfigurable, IReferenceable, ICommandable, IAnnouncementsController {
     private static _defaultConfig;
     private _dependencyResolver;
     private _persistence;

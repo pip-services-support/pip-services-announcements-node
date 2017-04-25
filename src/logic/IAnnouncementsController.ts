@@ -5,7 +5,7 @@ import { DataPage } from 'pip-services-commons-node';
 import { PartyReferenceV1 } from '../data/version1/PartyReferenceV1';
 import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
 
-export interface IAnnouncementsBusinessLogic {
+export interface IAnnouncementsController {
     getAnnouncements(correlationId: string, filter: FilterParams, paging: PagingParams,
         callback: (err: any, page: DataPage<AnnouncementV1>) => void): void;
 

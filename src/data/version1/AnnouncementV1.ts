@@ -2,7 +2,7 @@ import { IStringIdentifiable } from 'pip-services-commons-node';
 import { MultiString } from 'pip-services-commons-node';
 
 import { LocationV1 } from './LocationV1';
-import { DocumentReferenceV1 } from './DocumentReferenceV1';
+import { AttachmentV1 } from './AttachmentV1';
 import { PartyReferenceV1 } from './PartyReferenceV1';
 
 export class AnnouncementV1 implements IStringIdentifiable {
@@ -16,7 +16,7 @@ export class AnnouncementV1 implements IStringIdentifiable {
         this.title = title;
         this.content = content;
 
-        this.pic_ids = [];
+        this.pics = [];
         this.docs = [];
         this.create_time = new Date();
     }
@@ -36,8 +36,8 @@ export class AnnouncementV1 implements IStringIdentifiable {
     public location?: LocationV1;
     public start_time?: Date;
     public end_time?: Date;
-    public pic_ids?: string[];
-    public docs?: DocumentReferenceV1[];
+    public pics?: AttachmentV1[];
+    public docs?: AttachmentV1[];
 
     /* Search */
     public tags?: string[];

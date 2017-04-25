@@ -19,11 +19,11 @@ import { IAttachmentsClientV1 } from 'pip-clients-attachments-node';
 import { PartyReferenceV1 } from '../data/version1/PartyReferenceV1';
 import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
 import { IAnnouncementsPersistence } from '../persistence/IAnnouncementsPersistence';
-import { IAnnouncementsBusinessLogic } from './IAnnouncementsBusinessLogic';
+import { IAnnouncementsController } from './IAnnouncementsController';
 import { AnnouncementsCommandSet } from './AnnouncementsCommandSet';
 import { AttachmentsConnector } from './AttachmentsConnector';
 
-export class AnnouncementsController implements IConfigurable, IReferenceable, ICommandable, IAnnouncementsBusinessLogic {
+export class AnnouncementsController implements IConfigurable, IReferenceable, ICommandable, IAnnouncementsController {
     private static _defaultConfig: ConfigParams = ConfigParams.fromTuples(
         'dependencies.persistence', 'pip-services-announcements:persistence:*:*:1.0',
         'dependencies.attachments', 'pip-services-attachments:client:*:*:1.0'

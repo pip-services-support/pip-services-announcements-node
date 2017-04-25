@@ -4,11 +4,12 @@ const mongoose_1 = require("mongoose");
 let Mixed = mongoose_1.Schema.Types.Mixed;
 exports.AnnouncementsMongoDbSchema = function (collection) {
     collection = collection || 'announcements';
-    let documentReferenceSchema = new mongoose_1.Schema({
-        id: { type: String, required: true },
-        name: { type: String, required: true }
+    let attachmentSchema = new mongoose_1.Schema({
+        id: { type: String, required: false },
+        uri: { type: String, required: false },
+        name: { type: String, required: false }
     });
-    documentReferenceSchema.set('toJSON', {
+    attachmentSchema.set('toJSON', {
         transform: function (doc, ret) {
             //ret.id = ret._id;
             delete ret._id;
@@ -47,7 +48,7 @@ exports.AnnouncementsMongoDbSchema = function (collection) {
         category: { type: String, required: true },
         app: { type: String, required: false },
         /* Automatically managed fields */
-        creator: { type: documentReferenceSchema, required: false },
+        creator: { type: attachmentSchema, required: false },
         create_time: { type: Date, required: true, 'default': Date.now },
         /* Content */
         title: { type: Mixed, required: false },
@@ -55,8 +56,8 @@ exports.AnnouncementsMongoDbSchema = function (collection) {
         location: { type: locationSchema, required: false },
         start_time: { type: Date, required: false },
         end_time: { type: Date, required: false },
-        pic_ids: { type: [String], required: false },
-        docs: { type: [documentReferenceSchema], required: false },
+        pics: { type: [attachmentSchema], required: false },
+        docs: { type: [attachmentSchema], required: false },
         /* Search  */
         tags: { type: [String], required: false },
         all_tags: { type: [String], required: false, index: true },

@@ -50,7 +50,7 @@ class AnnouncementV1 implements IStringIdentifiable {
     public start_time?: Date;
     public end_time?: Date;
     public pic_ids?: string[];
-    public docs?: DocumentReferenceV1[];
+    public docs?: AttachmentV1[];
 
     /* Search */
     public tags?: string[];
@@ -65,7 +65,7 @@ class AnnouncementV1 implements IStringIdentifiable {
     public custom_dat?: any;
 }
 
-class DocumentReferenceV1 implements IStringIdentifiable {
+class AttachmentV1 implements IStringIdentifiable {
     public id: string;
     public name?: string;
 }

@@ -13,12 +13,12 @@ import { PagingParamsSchema } from 'pip-services-commons-node';
 import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
 import { PartyReferenceV1Schema } from '../data/version1/PartyReferenceV1Schema';
 import { AnnouncementV1Schema } from '../data/version1/AnnouncementV1Schema';
-import { IAnnouncementsBusinessLogic } from './IAnnouncementsBusinessLogic';
+import { IAnnouncementsController } from './IAnnouncementsController';
 
 export class AnnouncementsCommandSet extends CommandSet {
-    private _logic: IAnnouncementsBusinessLogic;
+    private _logic: IAnnouncementsController;
 
-	constructor(logic: IAnnouncementsBusinessLogic) {
+	constructor(logic: IAnnouncementsController) {
 		super();
 
 		this._logic = logic;

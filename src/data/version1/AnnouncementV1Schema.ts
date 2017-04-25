@@ -4,7 +4,7 @@ import { TypeCode } from 'pip-services-commons-node';
 
 import { LocationV1Schema } from './LocationV1Schema';
 import { PartyReferenceV1Schema } from './PartyReferenceV1Schema';
-import { DocumentReferenceV1Schema } from './DocumentReferenceV1Schema';
+import { AttachmentV1Schema } from './AttachmentV1Schema';
 
 export class AnnouncementV1Schema extends ObjectSchema {
     public constructor() {
@@ -25,8 +25,8 @@ export class AnnouncementV1Schema extends ObjectSchema {
         this.withOptionalProperty('location', new LocationV1Schema());
         this.withOptionalProperty('start_time', null); //TypeCode.DateTime);
         this.withOptionalProperty('end_time', null); //TypeCode.DateTime);
-        this.withOptionalProperty('pic_ids', new ArraySchema(TypeCode.String));
-        this.withOptionalProperty('docs', new ArraySchema(new DocumentReferenceV1Schema()));
+        this.withOptionalProperty('pics', new ArraySchema(new AttachmentV1Schema()));
+        this.withOptionalProperty('docs', new ArraySchema(new AttachmentV1Schema()));
 
         /* Search */
         this.withOptionalProperty('tags', new ArraySchema(TypeCode.String));

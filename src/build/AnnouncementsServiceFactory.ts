@@ -8,7 +8,7 @@ import { AnnouncementsController } from '../logic/AnnouncementsController';
 import { AnnouncementsHttpServiceV1 } from '../services/version1/AnnouncementsHttpServiceV1';
 import { AnnouncementsSenecaServiceV1 } from '../services/version1/AnnouncementsSenecaServiceV1'; 
 
-export class AnnouncementsFactory extends Factory {
+export class AnnouncementsServiceFactory extends Factory {
 	public static Descriptor = new Descriptor("pip-services-announcements", "factory", "default", "default", "1.0");
 	public static MemoryPersistenceDescriptor = new Descriptor("pip-services-announcements", "persistence", "memory", "*", "1.0");
 	public static FilePersistenceDescriptor = new Descriptor("pip-services-announcements", "persistence", "file", "*", "1.0");
@@ -19,12 +19,12 @@ export class AnnouncementsFactory extends Factory {
 	
 	constructor() {
 		super();
-		this.registerAsType(AnnouncementsFactory.MemoryPersistenceDescriptor, AnnouncementsMemoryPersistence);
-		this.registerAsType(AnnouncementsFactory.FilePersistenceDescriptor, AnnouncementsFilePersistence);
-		this.registerAsType(AnnouncementsFactory.MongoDbPersistenceDescriptor, AnnouncementsMongoDbPersistence);
-		this.registerAsType(AnnouncementsFactory.ControllerDescriptor, AnnouncementsController);
-		this.registerAsType(AnnouncementsFactory.SenecaServiceDescriptor, AnnouncementsSenecaServiceV1);
-		this.registerAsType(AnnouncementsFactory.HttpServiceDescriptor, AnnouncementsHttpServiceV1);
+		this.registerAsType(AnnouncementsServiceFactory.MemoryPersistenceDescriptor, AnnouncementsMemoryPersistence);
+		this.registerAsType(AnnouncementsServiceFactory.FilePersistenceDescriptor, AnnouncementsFilePersistence);
+		this.registerAsType(AnnouncementsServiceFactory.MongoDbPersistenceDescriptor, AnnouncementsMongoDbPersistence);
+		this.registerAsType(AnnouncementsServiceFactory.ControllerDescriptor, AnnouncementsController);
+		this.registerAsType(AnnouncementsServiceFactory.SenecaServiceDescriptor, AnnouncementsSenecaServiceV1);
+		this.registerAsType(AnnouncementsServiceFactory.HttpServiceDescriptor, AnnouncementsHttpServiceV1);
 	}
 	
 }

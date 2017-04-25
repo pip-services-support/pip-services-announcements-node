@@ -1,8 +1,8 @@
 import { CommandSet } from 'pip-services-commons-node';
-import { IAnnouncementsBusinessLogic } from './IAnnouncementsBusinessLogic';
+import { IAnnouncementsController } from './IAnnouncementsController';
 export declare class AnnouncementsCommandSet extends CommandSet {
     private _logic;
-    constructor(logic: IAnnouncementsBusinessLogic);
+    constructor(logic: IAnnouncementsController);
     private makeGetAnnouncementsCommand();
     private makeGetRandomAnnouncementCommand();
     private makeGetAnnouncementByIdCommand();

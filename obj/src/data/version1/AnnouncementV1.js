@@ -8,7 +8,7 @@ class AnnouncementV1 {
         this.creator = creator;
         this.title = title;
         this.content = content;
-        this.pic_ids = [];
+        this.pics = [];
         this.docs = [];
         this.create_time = new Date();
     }

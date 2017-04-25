@@ -4,12 +4,13 @@ let Mixed = Schema.Types.Mixed;
 export let AnnouncementsMongoDbSchema = function(collection?: string) {
     collection = collection || 'announcements';
 
-    let documentReferenceSchema = new Schema({
-        id: { type: String, required: true },
-        name: { type: String, required: true }
+    let attachmentSchema = new Schema({
+        id: { type: String, required: false },
+        uri: { type: String, required: false },
+        name: { type: String, required: false }
     });
 
-    documentReferenceSchema.set('toJSON', {
+    attachmentSchema.set('toJSON', {
         transform: function (doc, ret) {
             //ret.id = ret._id;
             delete ret._id;
@@ -55,7 +56,7 @@ export let AnnouncementsMongoDbSchema = function(collection?: string) {
             app: { type: String, required: false },
 
             /* Automatically managed fields */
-            creator: { type: documentReferenceSchema, required: false },
+            creator: { type: attachmentSchema, required: false },
             create_time: { type: Date, required: true, 'default': Date.now },
 
             /* Content */
@@ -64,8 +65,8 @@ export let AnnouncementsMongoDbSchema = function(collection?: string) {
             location: { type: locationSchema, required: false },
             start_time: { type: Date, required: false },
             end_time: { type: Date, required: false },
-            pic_ids: { type: [String], required: false },
-            docs: { type: [documentReferenceSchema], required: false },
+            pics: { type: [attachmentSchema], required: false },
+            docs: { type: [attachmentSchema], required: false },
 
             /* Search  */
             tags: { type: [String], required: false },
