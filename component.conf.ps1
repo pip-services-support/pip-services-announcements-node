@@ -11,4 +11,4 @@ $TestStyle = 'tdd'
 $Deploy = 'none'
 $Run = 'process'
 $RunStartCommand = 'node'
-$RunStartArguments = @('./bin/run.js', '-c', './config/config.yaml')
+$RunStartArguments = @('./bin/run.js', '-c', './config/config.yml')
