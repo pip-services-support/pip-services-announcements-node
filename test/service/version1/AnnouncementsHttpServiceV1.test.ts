@@ -80,7 +80,7 @@ suite('AnnouncementsHttpServiceV1', ()=> {
         async.series([
         // Create one announcement
             (callback) => {
-                rest.post('/announcements/create_announcement',
+                rest.post('/v1/announcements/create_announcement',
                     {
                         announcement: ANNOUNCEMENT1
                     },
@@ -99,7 +99,7 @@ suite('AnnouncementsHttpServiceV1', ()=> {
             },
         // Create another announcement
             (callback) => {
-                rest.post('/announcements/create_announcement',
+                rest.post('/v1/announcements/create_announcement',
                     {
                         announcement: ANNOUNCEMENT2
                     },
@@ -118,7 +118,7 @@ suite('AnnouncementsHttpServiceV1', ()=> {
             },
         // Get all announcements
             (callback) => {
-                rest.post('/announcements/get_announcements',
+                rest.post('/v1/announcements/get_announcements',
                     {},
                     (err, req, res, page) => {
                         assert.isNull(err);
@@ -134,7 +134,7 @@ suite('AnnouncementsHttpServiceV1', ()=> {
             (callback) => {
                 announcement1.content = <MultiString>{ en: 'Updated Content 1' };
 
-                rest.post('/announcements/update_announcement',
+                rest.post('/v1/announcements/update_announcement',
                     {
                         announcement: announcement1
                     },
@@ -153,7 +153,7 @@ suite('AnnouncementsHttpServiceV1', ()=> {
             },
         // Delete announcement
             (callback) => {
-                rest.post('/announcements/delete_announcement_by_id',
+                rest.post('/v1/announcements/delete_announcement_by_id',
                     {
                         announcement_id: announcement1.id
                     },
@@ -166,7 +166,7 @@ suite('AnnouncementsHttpServiceV1', ()=> {
             },
         // Try to get delete announcement
             (callback) => {
-                rest.post('/announcements/get_announcement_by_id',
+                rest.post('/v1/announcements/get_announcement_by_id',
                     {
                         announcement_id: announcement1.id
                     },
