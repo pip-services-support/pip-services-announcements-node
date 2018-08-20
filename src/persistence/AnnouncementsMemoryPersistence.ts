@@ -72,7 +72,7 @@ export class AnnouncementsMemoryPersistence
         let app = filter.getAsNullableString('app');
         let status = filter.getAsNullableString('status');
         let tagsString = filter.get('tags');
-        let tags = tagsString != null ? TagsProcessor.compressTags(tagsString) : null;
+        let tags = tagsString != null ? TagsProcessor.compressTags([tagsString]) : null;
         let fromCreateTime = filter.getAsNullableDateTime('from_create_time');
         let toCreateTime = filter.getAsNullableDateTime('to_create_time');
 

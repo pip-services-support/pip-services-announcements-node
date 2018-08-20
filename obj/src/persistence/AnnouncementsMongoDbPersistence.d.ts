@@ -1,6 +1,6 @@
 import { FilterParams } from 'pip-services-commons-node';
 import { PagingParams } from 'pip-services-commons-node';
-import { IdentifiableMongoDbPersistence } from 'pip-services-data-node';
+import { IdentifiableMongoDbPersistence } from 'pip-services-mongodb-node';
 import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
 import { IAnnouncementsPersistence } from './IAnnouncementsPersistence';
 export declare class AnnouncementsMongoDbPersistence extends IdentifiableMongoDbPersistence<AnnouncementV1, string> implements IAnnouncementsPersistence {

@@ -74,9 +74,7 @@ export class AnnouncementsController implements IConfigurable, IReferenceable, I
 
         announcement.create_time = new Date();
         announcement.all_tags = TagsProcessor.extractHashTags(
-            announcement, 
-            'title.en', 'title.sp', 'title.fr', 'title.de', 'title.ru',
-            'content.en', 'content.sp', 'content.fr', 'content.de', 'content.ru'
+            '#title.en#title.sp#title.fr#title.de#title.ru#content.en#content.sp#content.fr#content.de#content.ru'
         );
 
         async.series([
@@ -100,9 +98,7 @@ export class AnnouncementsController implements IConfigurable, IReferenceable, I
         let newAnnouncement: AnnouncementV1 = null;
         
         announcement.all_tags = TagsProcessor.extractHashTags(
-            announcement, 
-            'title.en', 'title.sp', 'title.fr', 'title.de', 'title.ru',
-            'content.en', 'content.sp', 'content.fr', 'content.de', 'content.ru'
+            '#title.en#title.sp#title.fr#title.de#title.ru#content.en#content.sp#content.fr#content.de#content.ru'
         );
 
         async.series([

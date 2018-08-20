@@ -54,7 +54,7 @@ class AnnouncementsMemoryPersistence extends pip_services_data_node_1.Identifiab
         let app = filter.getAsNullableString('app');
         let status = filter.getAsNullableString('status');
         let tagsString = filter.get('tags');
-        let tags = tagsString != null ? pip_services_commons_node_2.TagsProcessor.compressTags(tagsString) : null;
+        let tags = tagsString != null ? pip_services_commons_node_2.TagsProcessor.compressTags([tagsString]) : null;
         let fromCreateTime = filter.getAsNullableDateTime('from_create_time');
         let toCreateTime = filter.getAsNullableDateTime('to_create_time');
         return (item) => {
