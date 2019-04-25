@@ -2,11 +2,11 @@ let _ = require('lodash');
 let async = require('async');
 let assert = require('chai').assert;
 
-import { Descriptor } from 'pip-services-commons-node';
-import { ConfigParams } from 'pip-services-commons-node';
-import { References } from 'pip-services-commons-node';
-import { ConsoleLogger } from 'pip-services-components-node';
-import { MultiString } from 'pip-services-commons-node';
+import { Descriptor } from 'pip-services3-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { References } from 'pip-services3-commons-node';
+import { ConsoleLogger } from 'pip-services3-components-node';
+import { MultiString } from 'pip-services3-commons-node';
 
 import { PartyReferenceV1 } from '../../src/data/version1/PartyReferenceV1';
 import { AnnouncementV1 } from '../../src/data/version1/AnnouncementV1';
@@ -21,8 +21,8 @@ let ANNOUNCEMENT1 = <AnnouncementV1>{
         id: '1',
         name: 'Test User'
     },
-    title: <MultiString>{ en: 'Announcement 1' },
-    content: <MultiString>{ en: 'Sample Announcement #1' }
+    title: new MultiString({ en: 'Announcement 1' }),
+    content: new MultiString({ en: 'Sample Announcement #1' })
 };
 let ANNOUNCEMENT2 = <AnnouncementV1>{
     id: '2',
@@ -32,8 +32,8 @@ let ANNOUNCEMENT2 = <AnnouncementV1>{
         id: '1',
         name: 'Test User'
     },
-    title: <MultiString>{ en: 'Announcement 2' },
-    content: <MultiString>{ en: 'Sample Announcement #2' }
+    title: new MultiString({ en: 'Announcement 2' }),
+    content: new MultiString({ en: 'Sample Announcement #2' })
 };
 
 suite('AnnouncementsLambdaFunction', ()=> {
@@ -72,7 +72,7 @@ suite('AnnouncementsLambdaFunction', ()=> {
                         
                         assert.isObject(announcement);
                         assert.equal(announcement.category, ANNOUNCEMENT1.category);
-                        assert.equal(announcement.content.en, ANNOUNCEMENT1.content.en);
+                        assert.equal(announcement.content.en, ANNOUNCEMENT1.content.get('en'));
 
                         announcement1 = announcement;
 
@@ -93,7 +93,7 @@ suite('AnnouncementsLambdaFunction', ()=> {
                         
                         assert.isObject(announcement);
                         assert.equal(announcement.category, ANNOUNCEMENT2.category);
-                        assert.equal(announcement.content.en, ANNOUNCEMENT2.content.en);
+                        assert.equal(announcement.content.en, ANNOUNCEMENT2.content.get('en'));
 
                         announcement2 = announcement;
 
@@ -120,7 +120,7 @@ suite('AnnouncementsLambdaFunction', ()=> {
             },
         // Update the announcement
             (callback) => {
-                announcement1.content = <MultiString>{ en: 'Updated Content 1' };
+                announcement1.content = new MultiString({ en: 'Updated Content 1' });
 
                 lambda.act(
                     {

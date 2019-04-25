@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let async = require('async');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-const pip_services_commons_node_3 = require("pip-services-commons-node");
-const pip_services_commons_node_4 = require("pip-services-commons-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+const pip_services3_commons_node_3 = require("pip-services3-commons-node");
+const pip_services3_commons_node_4 = require("pip-services3-commons-node");
 const AnnouncementsCommandSet_1 = require("./AnnouncementsCommandSet");
 const AttachmentsConnector_1 = require("./AttachmentsConnector");
 class AnnouncementsController {
     constructor() {
-        this._dependencyResolver = new pip_services_commons_node_2.DependencyResolver(AnnouncementsController._defaultConfig);
+        this._dependencyResolver = new pip_services3_commons_node_2.DependencyResolver(AnnouncementsController._defaultConfig);
     }
     configure(config) {
         this._dependencyResolver.configure(config);
@@ -37,7 +37,7 @@ class AnnouncementsController {
     createAnnouncement(correlationId, announcement, callback) {
         let newAnnouncement = null;
         announcement.create_time = new Date();
-        announcement.all_tags = pip_services_commons_node_3.TagsProcessor.extractHashTags('#title.en#title.sp#title.fr#title.de#title.ru#content.en#content.sp#content.fr#content.de#content.ru');
+        announcement.all_tags = pip_services3_commons_node_3.TagsProcessor.extractHashTags('#title.en#title.sp#title.fr#title.de#title.ru#content.en#content.sp#content.fr#content.de#content.ru');
         async.series([
             (callback) => {
                 this._persistence.create(correlationId, announcement, (err, data) => {
@@ -55,13 +55,13 @@ class AnnouncementsController {
     updateAnnouncement(correlationId, announcement, callback) {
         let oldAnnouncement = null;
         let newAnnouncement = null;
-        announcement.all_tags = pip_services_commons_node_3.TagsProcessor.extractHashTags('#title.en#title.sp#title.fr#title.de#title.ru#content.en#content.sp#content.fr#content.de#content.ru');
+        announcement.all_tags = pip_services3_commons_node_3.TagsProcessor.extractHashTags('#title.en#title.sp#title.fr#title.de#title.ru#content.en#content.sp#content.fr#content.de#content.ru');
         async.series([
             (callback) => {
                 this._persistence.getOneById(correlationId, announcement.id, (err, data) => {
                     oldAnnouncement = data;
                     if (err == null && data == null) {
-                        err = new pip_services_commons_node_4.NotFoundException(correlationId, 'ANNOUNCEMENT_NOT_FOUND', 'Announcement ' + announcement.id + ' was not found').withDetails('announcement_id', announcement.id);
+                        err = new pip_services3_commons_node_4.NotFoundException(correlationId, 'ANNOUNCEMENT_NOT_FOUND', 'Announcement ' + announcement.id + ' was not found').withDetails('announcement_id', announcement.id);
                     }
                     callback(err);
                 });
@@ -96,6 +96,6 @@ class AnnouncementsController {
         });
     }
 }
-AnnouncementsController._defaultConfig = pip_services_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-announcements:persistence:*:*:1.0', 'dependencies.attachments', 'pip-services-attachments:client:*:*:1.0');
+AnnouncementsController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-announcements:persistence:*:*:1.0', 'dependencies.attachments', 'pip-services-attachments:client:*:*:1.0');
 exports.AnnouncementsController = AnnouncementsController;
 //# sourceMappingURL=AnnouncementsController.js.map

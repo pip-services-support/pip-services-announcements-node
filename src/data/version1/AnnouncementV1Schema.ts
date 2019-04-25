@@ -1,6 +1,6 @@
-import { ObjectSchema } from 'pip-services-commons-node';
-import { ArraySchema } from 'pip-services-commons-node';
-import { TypeCode } from 'pip-services-commons-node';
+import { ObjectSchema } from 'pip-services3-commons-node';
+import { ArraySchema } from 'pip-services3-commons-node';
+import { TypeCode } from 'pip-services3-commons-node';
 
 import { LocationV1Schema } from './LocationV1Schema';
 import { PartyReferenceV1Schema } from './PartyReferenceV1Schema';
