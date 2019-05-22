@@ -1,7 +1,7 @@
 export declare class AnnouncementStatusV1 {
-    static readonly New = "new";
-    static readonly Writing = "writing";
-    static readonly Translating = "translating";
-    static readonly Verifying = "verifying";
-    static readonly Completed = "completed";
+    static readonly New: string;
+    static readonly Writing: string;
+    static readonly Translating: string;
+    static readonly Verifying: string;
+    static readonly Completed: string;
 }
