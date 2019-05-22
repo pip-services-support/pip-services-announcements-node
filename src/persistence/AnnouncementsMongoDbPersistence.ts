@@ -5,19 +5,19 @@ import { PagingParams } from 'pip-services3-commons-node';
 import { DataPage } from 'pip-services3-commons-node';
 import { AnyValueMap } from 'pip-services3-commons-node';
 import { TagsProcessor } from 'pip-services3-commons-node';
-import { IdentifiableMongoDbPersistence } from 'pip-services3-mongodb-node';
+import { IdentifiableMongoosePersistence } from 'pip-services3-mongoose-node';
 
 import { PartyReferenceV1 } from '../data/version1/PartyReferenceV1';
 import { AnnouncementV1 } from '../data/version1/AnnouncementV1';
 import { IAnnouncementsPersistence } from './IAnnouncementsPersistence';
-import { AnnouncementsMongoDbSchema } from './AnnouncementsMongoDbSchema';
+import { AnnouncementsMongooseSchema } from './AnnouncementsMongooseSchema';
 
 export class AnnouncementsMongoDbPersistence 
-    extends IdentifiableMongoDbPersistence<AnnouncementV1, string> 
+    extends IdentifiableMongoosePersistence<AnnouncementV1, string> 
     implements IAnnouncementsPersistence {
 
     constructor() {
-        super('announcements', AnnouncementsMongoDbSchema());
+        super('announcements', AnnouncementsMongooseSchema());
     }
 
     private composeFilter(filter: FilterParams): any {

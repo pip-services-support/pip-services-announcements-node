@@ -1,1 +1,1 @@
-{"version":3,"file":"LocationV1.js","sourceRoot":"","sources":["../../../../src/data/version1/LocationV1.ts"],"names":[],"mappings":";;AAAA;IAEI,YAAmB,IAAY,EAAE,GAAS;QACtC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,GAAG,GAAG,GAAG,CAAC;IACnB,CAAC;CAIJ;AATD,gCASC"}
+{"version":3,"file":"LocationV1.js","sourceRoot":"","sources":["../../../../src/data/version1/LocationV1.ts"],"names":[],"mappings":";;AAAA,MAAa,UAAU;IAEnB,YAAmB,IAAY,EAAE,GAAS;QACtC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,GAAG,GAAG,GAAG,CAAC;IACnB,CAAC;CAIJ;AATD,gCASC"}
