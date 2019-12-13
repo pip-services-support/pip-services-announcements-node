@@ -17,11 +17,11 @@ class AnnouncementsServiceFactory extends pip_services3_components_node_1.Factor
         this.registerAsType(AnnouncementsServiceFactory.HttpServiceDescriptor, AnnouncementsHttpServiceV1_1.AnnouncementsHttpServiceV1);
     }
 }
+exports.AnnouncementsServiceFactory = AnnouncementsServiceFactory;
 AnnouncementsServiceFactory.Descriptor = new pip_services3_commons_node_1.Descriptor("pip-services-announcements", "factory", "default", "default", "1.0");
 AnnouncementsServiceFactory.MemoryPersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-announcements", "persistence", "memory", "*", "1.0");
 AnnouncementsServiceFactory.FilePersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-announcements", "persistence", "file", "*", "1.0");
 AnnouncementsServiceFactory.MongoDbPersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-announcements", "persistence", "mongodb", "*", "1.0");
 AnnouncementsServiceFactory.ControllerDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-announcements", "controller", "default", "*", "1.0");
 AnnouncementsServiceFactory.HttpServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-announcements", "service", "http", "*", "1.0");
-exports.AnnouncementsServiceFactory = AnnouncementsServiceFactory;
 //# sourceMappingURL=AnnouncementsServiceFactory.js.map

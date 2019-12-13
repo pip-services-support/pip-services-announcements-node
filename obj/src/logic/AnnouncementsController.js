@@ -96,6 +96,6 @@ class AnnouncementsController {
         });
     }
 }
-AnnouncementsController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-announcements:persistence:*:*:1.0', 'dependencies.attachments', 'pip-services-attachments:client:*:*:1.0');
 exports.AnnouncementsController = AnnouncementsController;
+AnnouncementsController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-announcements:persistence:*:*:1.0', 'dependencies.attachments', 'pip-services-attachments:client:*:*:1.0');
 //# sourceMappingURL=AnnouncementsController.js.map
