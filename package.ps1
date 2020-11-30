@@ -12,7 +12,7 @@ $latestImage="$($component.registry)/$($component.name):latest"
 docker build -f docker/Dockerfile -t $rcImage -t $latestImage .
 
 # Set environment variables
-$env:IMAGE = $stageImage
+$env:IMAGE = $rcImage
 
 # Set docker machine ip (on windows not localhost)
 if ($env:DOCKER_IP -ne $null) {
@@ -29,8 +29,8 @@ try {
 
     # Test using curl
     Start-Sleep -Seconds 10
-    Invoke-WebRequest -Uri http://localhost:8080/heartbeat
-    #Invoke-WebRequest -Uri http://localhost:8080/roles/get_roles_by_filter
+    Invoke-WebRequest -Uri "http://$($dockerMachineIp):8080/heartbeat"
+    #Invoke-WebRequest -Uri "http://$($dockerMachineIp):8080/roles/get_roles_by_filter"
 
     Write-Host "The container was successfully built."
 } finally {
