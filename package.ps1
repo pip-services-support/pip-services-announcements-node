@@ -5,13 +5,21 @@ $ErrorActionPreference = "Stop"
 
 # Get component data and set necessary variables
 $component = Get-Content -Path "component.json" | ConvertFrom-Json
-$stageImage="$($component.registry)/$($component.name):$($component.version)-$($component.build)-rc"
+$rcImage="$($component.registry)/$($component.name):$($component.version)-$($component.build)-rc"
+$latestImage="$($component.registry)/$($component.name):latest"
 
 # Build docker image
-docker build -f docker/Dockerfile -t $stageImage .
+docker build -f docker/Dockerfile -t $rcImage -t $latestImage .
 
 # Set environment variables
 $env:IMAGE = $stageImage
+
+# Set docker machine ip (on windows not localhost)
+if ($env:DOCKER_IP -ne $null) {
+    $dockerMachineIp = $env:DOCKER_IP
+} else {
+    $dockerMachineIp = "localhost"
+}
 
 try {
     # Workaround to remove dangling images
