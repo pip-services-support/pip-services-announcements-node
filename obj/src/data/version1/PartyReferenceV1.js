@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PartyReferenceV1 = void 0;
 class PartyReferenceV1 {
     constructor(id, name, email) {
         this.id = id;

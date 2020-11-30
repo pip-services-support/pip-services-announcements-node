@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.handler = exports.AnnouncementsLambdaFunction = void 0;
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_aws_node_1 = require("pip-services3-aws-node");
 const AnnouncementsServiceFactory_1 = require("../build/AnnouncementsServiceFactory");

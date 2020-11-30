@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AnnouncementsProcess = void 0;
 const pip_services3_container_node_1 = require("pip-services3-container-node");
 const pip_clients_attachments_node_1 = require("pip-clients-attachments-node");
 const AnnouncementsServiceFactory_1 = require("../build/AnnouncementsServiceFactory");

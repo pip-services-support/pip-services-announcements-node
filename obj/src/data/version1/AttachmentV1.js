@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AttachmentV1 = void 0;
 class AttachmentV1 {
     constructor(id, uri, name) {
         this.id = id;

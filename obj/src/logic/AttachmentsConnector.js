@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AttachmentsConnector = void 0;
 let _ = require('lodash');
 const pip_clients_attachments_node_1 = require("pip-clients-attachments-node");
 class AttachmentsConnector {

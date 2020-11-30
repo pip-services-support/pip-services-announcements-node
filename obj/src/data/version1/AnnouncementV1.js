@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AnnouncementV1 = void 0;
 class AnnouncementV1 {
     constructor(id, category, app, creator, title, content) {
         this.id = id;

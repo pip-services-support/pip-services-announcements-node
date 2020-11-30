@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AnnouncementsController = void 0;
 var AnnouncementsController_1 = require("./AnnouncementsController");
-exports.AnnouncementsController = AnnouncementsController_1.AnnouncementsController;
+Object.defineProperty(exports, "AnnouncementsController", { enumerable: true, get: function () { return AnnouncementsController_1.AnnouncementsController; } });
 //# sourceMappingURL=index.js.map

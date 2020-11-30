@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LocationV1 = void 0;
 class LocationV1 {
     constructor(name, pos) {
         this.name = name;

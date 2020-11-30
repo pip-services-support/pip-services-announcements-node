@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AnnouncementStatusV1 = void 0;
 class AnnouncementStatusV1 {
 }
 exports.AnnouncementStatusV1 = AnnouncementStatusV1;
